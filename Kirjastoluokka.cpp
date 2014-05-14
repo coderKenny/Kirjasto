@@ -6,7 +6,6 @@ Kirjastoluokka::Kirjastoluokka()
 {
 	KirjastonKirjat = new map<int, Kirja*>();
 	KirjastonAsiakkaat = new map<int, Asiakas*>();
-
 }
 
 
@@ -227,16 +226,18 @@ void Kirjastoluokka::lisaaKirja(Kirja* kirjaolio) // kommetti ett‰ kirja lis‰ttu
 	KirjastonKirjat->insert(pair<int, Kirja*>(kirjaolio->Sarjanumero, kirjaolio));
 }
 
-
-void Kirjastoluokka::poistaKirja(Kirja* kirjaolio)
+//void Kirjastoluokka::poistaKirja(Kirja* kirjaolio)
+void Kirjastoluokka::poistaKirja()
 {
-	KirjastonKirjat->erase(kirjaolio->Sarjanumero);
+	
 
-	cout<<"Syˆt‰ poistettavan kirjan sarjanumero mallilla 000,001,002....\n\n: ";
+	cout<<"\nSyˆt‰ poistettavan kirjan sarjanumero mallilla 000,001,002....\n\n: ";
 
 	string sarjaNumero;
 
 	cin>>sarjaNumero;
+
+	KirjastonKirjat->erase(stoi(sarjaNumero)); // Parse to integer
 
 	// Poista kirja tiedostosta -->
 
@@ -293,15 +294,114 @@ void Kirjastoluokka::poistaKirja(Kirja* kirjaolio)
   }
 }
 
-
-void Kirjastoluokka::lisaaAsiakas(Asiakas* lisattavaAsiakas)
+// void Kirjastoluokka::lisaaAsiakas(Asiakas* lisattavaAsiakas)
+void Kirjastoluokka::lisaaAsiakas()
 {
+	Asiakas* lisattavaAsiakas = new Asiakas();
+
+	
+	getchar(); // Putsaa rivinvaihtomerkki pois
+	cout<<"\nAnna uuden lis‰tt‰v‰n asiakkaan nimi : ";
+	string nimi;
+	getline(cin,nimi);
+	string muunnettuNimi = nimi;
+	replace(muunnettuNimi.begin(), muunnettuNimi.end(), ' ', '_');
+	lisattavaAsiakas->Nimi=muunnettuNimi;
+	
+	cout<<"\n\nAnna uuden lis‰tt‰v‰n asiakkaan osoite : ";
+	string osoite;
+	getline(cin,osoite);
+	string muunnettuOsoite = osoite;
+	replace(muunnettuOsoite.begin(), muunnettuOsoite.end(), ' ', '_');
+	lisattavaAsiakas->Osoite=muunnettuOsoite;
+	
+	cout<<"\n\nAnna uuden lis‰tt‰v‰n asiakkaan SOTU : ";
+	string SOTU;
+	getline(cin,SOTU);
+	lisattavaAsiakas->Sotu=SOTU;
+
+
+	cout<<"\n\nAnna uuden lis‰tt‰v‰n asiakkaan asiakasnumero : ";
+	int asiakasNumero;
+	cin>> asiakasNumero;
+	lisattavaAsiakas->Asiakasnumero=asiakasNumero;
+
+
 	KirjastonAsiakkaat->insert(pair<int, Asiakas*>(lisattavaAsiakas->Asiakasnumero, lisattavaAsiakas));
 
+	ofstream outfile;
+
+	outfile.open("Asiakas.txt", std::ios_base::app);
+	outfile << "\n"<<muunnettuNimi<<","<<muunnettuOsoite<<","<<SOTU<<","<<"00"<<asiakasNumero;
+	outfile.close();
+
 }
-void Kirjastoluokka::poistaAsiakas(Asiakas* poistettavaAsiakas)
+
+void Kirjastoluokka::poistaAsiakas()
 {
-	KirjastonKirjat->erase(poistettavaAsiakas->Asiakasnumero);
+	cout<<"\nSyˆt‰ poistettavan asiakkaan asiakasnumero mallilla 000,001,002....\n\n: ";
+
+	string sarjaNumero;
+
+	cin>>sarjaNumero;
+
+	KirjastonAsiakkaat->erase(stoi(sarjaNumero)); // Parse to integer
+
+
+
+	// Poista asiakas tiedostosta -->
+
+	std::ifstream inputStream ("Asiakas.txt", std::ifstream::binary);
+	if (inputStream) 
+	{
+
+	// Laske tekstifilun koko
+    inputStream.seekg (0, inputStream.end);
+    int length = inputStream.tellg();
+    inputStream.seekg (0, inputStream.beg);
+
+	
+    // Varaa muistia koon verran
+    char * buffer = new char [length];
+
+    // Lue data sis‰‰n ja tee siit‰ stringi
+    inputStream.read (buffer,length);
+	string tiedostonSisalto(buffer,length);
+
+	cout<<endl<<endl;
+	//cout<<tiedostonSisalto;
+
+	// http://stackoverflow.com/questions/8247102/how-to-remove-a-line-from-a-string-with-large-content-in-c
+
+	// Poista rivi kahden rivinvaihdon v‰list‰
+	size_t nFPos = tiedostonSisalto.find(sarjaNumero);
+	size_t secondNL = tiedostonSisalto.find('\n', nFPos);
+	size_t firstNL = tiedostonSisalto.rfind('\n', nFPos);
+
+	//cout << "Original string: " << '\n' << tiedostonSisalto << '\n' << endl;
+
+	tiedostonSisalto.erase(firstNL, secondNL - firstNL);
+
+
+	//cout << "Modified string: " << '\n' << tiedostonSisalto << endl;
+
+	// Sulje inputStrem
+    inputStream.close();
+
+	// Avaa tiedosto ja tyhjenn‰ se 
+	std::fstream f;
+	f.open("Asiakas.txt", std::fstream::out | std::fstream::trunc);
+
+
+	// Kirjoita data takaisin tiedostoon / streamiin
+	f<<tiedostonSisalto;
+
+	// Sulje stream
+	f.close();
+
+	// Vapauta tila heap:ist‰
+    delete[] buffer;
+  }
 }
 
 

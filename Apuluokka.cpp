@@ -88,7 +88,7 @@ void Apuluokka::KaynnistaKirjastoApplikaatio(Kirjastoluokka* instantioituOlio) /
 				break;
 
 				case 50 :
-					instantioituOlio->poistaKirja(kirja1);
+					instantioituOlio->poistaKirja();
 				break;
 				
 				case 51 :
@@ -109,11 +109,11 @@ void Apuluokka::KaynnistaKirjastoApplikaatio(Kirjastoluokka* instantioituOlio) /
 				break;
 
 				case 55 :
-					instantioituOlio->lisaaAsiakas(asiakas1);
+					instantioituOlio->lisaaAsiakas();
 				break;
 		
 				case 56:
-					instantioituOlio->poistaAsiakas(asiakas1);
+					instantioituOlio->poistaAsiakas();
 				break;
 
 				case 57:
@@ -125,9 +125,9 @@ void Apuluokka::KaynnistaKirjastoApplikaatio(Kirjastoluokka* instantioituOlio) /
 				// XXX a case
 				// break;
 
-				//case 98: //b Listaa asiakkaan tiedot
-				// XXX a case
-				// break;
+			/*	case 98: 
+					instantioituOlio->
+				break;*/
 
 				default:
 				LuoAlkuIF();

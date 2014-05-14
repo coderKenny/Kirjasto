@@ -10,10 +10,10 @@ public:
 	(map<int, Asiakas*>)* KirjastonAsiakkaat; //Map johon tallennetaan asiakkaat asiaksoloion pointterina
 
 	void lisaaKirja(Kirja*); 
-	void poistaKirja(Kirja*);
+	void poistaKirja();
 
-	void lisaaAsiakas(Asiakas*);
-	void poistaAsiakas(Asiakas*);
+	void lisaaAsiakas();
+	void poistaAsiakas();
 
 	void naytaKaikkiKirjastonKirjat(); //Listaa mapistä kaikki kirjat
 	
