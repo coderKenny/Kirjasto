@@ -7,6 +7,8 @@ Kirja::Kirja()
 
 void Kirja::toString() 
 {
+	
+	cout<<endl;
 	cout << Tekija << endl;
 	cout << TeoksenNimi << endl;
 	cout << Sarjanumero << endl;
@@ -16,7 +18,8 @@ void Kirja::toString()
 	if (Lainaustilanne == true)
 		cout << "Lainaustieto : Lainassa " << endl;
 	else
-		cout << "Lainaustieto : Lainattavissa ";
+		cout << "Lainaustieto : Lainattavissa "<<endl;
+
 }
 
 Kirja::~Kirja()

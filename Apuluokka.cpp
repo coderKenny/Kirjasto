@@ -8,6 +8,7 @@
 Apuluokka::Apuluokka(void) // Apuluokan konstruktori
 {
 	kirja1= new Kirja();
+	asiakas1 = new Asiakas(true); // Overload to construct test
 }
 
 
@@ -18,12 +19,11 @@ Apuluokka::~Apuluokka(void) // Apuluokan destruktori
 }
 
 
-void Apuluokka::pause() // System pause funktio
+void Apuluokka::tauko() // System pause funktio //nimeä ja suomeksi
 {
-  cout << endl << "Press enter to continue...";
+  cout << endl << "Paina rivinvaihtoa";
   getchar();
 }
-
 
 void Apuluokka::gotoxy ( int column, int line )  // Liikutetaan kursoria konsolissa
 {
@@ -42,7 +42,7 @@ void Apuluokka::LisaaGetCharreja(int maara) // Lisää getChar funktioita loppuun
 		getchar(); // stdio.h		
 }
 
-void Apuluokka::ApuluokanLisaaKirjaFunktio(Kirjastoluokka* instantioituLuokka) // Lisää kirja
+void Apuluokka::ApuluokanLisaaKirjaFunktio(Kirjastoluokka* instantioituOlio) // Lisää kirja
 {
 	// Lue tiedostosta !
 	// 
@@ -50,13 +50,13 @@ void Apuluokka::ApuluokanLisaaKirjaFunktio(Kirjastoluokka* instantioituLuokka) /
 
 	kirja1->TeoksenNimi="Bible";
 	kirja1->Lainaustilanne=false;
-	kirja1->Vuosi=0;
+	kirja1->Vuosi=1888;
 	kirja1->Tekija=("God");
-	kirja1->Sarjanumero=1;
-	kirja1->UDKLuokka=123;
+	kirja1->Sarjanumero=6;
+	kirja1->UDKLuokka="UDKluokka";
 	kirja1->Kustantaja="World";
-
-	instantioituLuokka->lisaaKirja(*kirja1);
+	
+	instantioituOlio->lisaaKirja(kirja1);
 
 	LuoAlkuIF();
 }
@@ -65,59 +65,89 @@ void Apuluokka::ApuluokanLisaaKirjaFunktio(Kirjastoluokka* instantioituLuokka) /
 void Apuluokka::ListaaKaikkiKirjat(Kirjastoluokka*  instantioituLuokka)
 {
 	instantioituLuokka->naytaKaikkiKirjastonKirjat();
+	tauko();
 }
 
-void Apuluokka::KaynnistaKirjastoApplikaatio(Kirjastoluokka* instantioituLuokka) // Käynnistä karuselli
+
+
+void Apuluokka::KaynnistaKirjastoApplikaatio(Kirjastoluokka* instantioituOlio) // Käynnistä karuselli
 {
 	LuoAlkuIF();
 	while(1)
 	{
 		int syote;
-		cin>> syote;
-		if(syote==9)
+		syote=cin.get();
+		if(syote==48)
 			break;
 		else
 		{
 			switch(syote)
 			{
-				case 1 :
-				ApuluokanLisaaKirjaFunktio(instantioituLuokka);
+				case 49 :
+					ApuluokanLisaaKirjaFunktio(instantioituOlio);
 				break;
 
-				case 2 :
+				case 50 :
+					instantioituOlio->poistaKirja(kirja1);
 				break;
 				
-				case 3 :
-					ListaaKaikkiKirjat(instantioituLuokka);
+				case 51 :
+					ListaaKaikkiKirjat(instantioituOlio);
 				break;
 
-				case 4 : 
+				case 52 : 
+					instantioituOlio->HaeTiettyTeos();
 				break;
 
-				case 5 :
+				case 53 :
+					//instantioituOlio->lainaaKirja(asiakas1,kirja1);
+					instantioituOlio->lainaaKirja(kirja1);
 				break;
 
-				case 6 :
+				case 54 :
+					instantioituOlio->palautaKirja();
 				break;
 
-				case 7 :
+				case 55 :
+					instantioituOlio->lisaaAsiakas(asiakas1);
+				break;
+		
+				case 56:
+					instantioituOlio->poistaAsiakas(asiakas1);
 				break;
 
-				case 8:
+				case 57:
+				instantioituOlio->ListaaKaikkiAsiakkaat();
+				tauko();
 				break;
+
+				//case 97: // a Listaa asiakkaan lainat
+				// XXX a case
+				// break;
+
+				//case 98: //b Listaa asiakkaan tiedot
+				// XXX a case
+				// break;
+
+				default:
+				LuoAlkuIF();
+				gotoxy(16,17);
+				break;
+
 			}
 		
 		}
+
 	}
 }
 
 void Apuluokka::LuoAlkuIF() // Luo puhdas screna
 {
 	
-	system("CLS");		// Tyhjennä ruutu, non-portable
-	gotoxy(0,14);		// Tyhjennä mahdollinen vanha syöte
+	system("CLS");	// Tyhjennä ruutu, non-portable
+	gotoxy(0,17);		// Tyhjennä mahdollinen vanha syöte
 	cout<<"                                                                            "; // Tyhjennä rivi
-	gotoxy(16,14);		// Palauta kursori syöttömoodiin
+	gotoxy(16,17);		// Palauta kursori syöttömoodiin
 	
 	gotoxy(0,0);
 	cout<<endl;
@@ -131,11 +161,14 @@ void Apuluokka::LuoAlkuIF() // Luo puhdas screna
 	cout <<"6. Palauta kirja kirjastoon\n";
 	cout <<"7. Lisaa asiakas\n";
 	cout <<"8. Poista asiakas\n";
-	cout <<"9. Poistu\n";
+	cout <<"9. Listaa kaikki asiakkaat\n";
+	cout <<"a. Listaa asiakkaan lainat\n";
+	cout <<"b. Listaa asiakkaan tiedot\n";
+	cout <<"0. Poistu\n";
 	cout<<endl<<endl;
 
 	cout<<"Syota tehtava : ";
 
-	gotoxy(16,14);
+	gotoxy(16,17);
 
 }

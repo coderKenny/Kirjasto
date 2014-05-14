@@ -1,0 +1,3 @@
+Ville_Virtanen,Katu_1_Salo,230694-0621,001
+Maija_Meikäläinen,Tie_2_Salo,300460-4321,002
+Jaska_Jämerä,Keskuskatu_3_Salo,250180-1234,003

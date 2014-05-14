@@ -19,6 +19,10 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <fstream>
+#include <cstdio>
+
+#include <locale.h>
 
 using namespace std;
 

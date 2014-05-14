@@ -6,9 +6,14 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	setlocale(LC_ALL, ""); //Locale h kirjaston mukaan pakotetaan ohjelma käyttämään koneen omaa enkoodausta/lokalisoitua näppäimistöä,
+	// tarvittiin että saadaan ä ja ö toimimaan.
+
 	Kirjastoluokka* kirjastoLuokka = new Kirjastoluokka();
 	Apuluokka* apuluokka = new Apuluokka();
 	
+	kirjastoLuokka->lueKirjatTiedostosta();
+	kirjastoLuokka->lueAsiakkaatTiedostosta();
 
 	apuluokka->KaynnistaKirjastoApplikaatio(kirjastoLuokka);
 
