@@ -9,7 +9,7 @@ void Kirja::toString()
 {
 	
 	cout<<endl;
-	cout << Tekija << endl;
+	cout <<"Tekijä : "<< Tekija << endl;
 	cout << TeoksenNimi << endl;
 	cout << Sarjanumero << endl;
 	cout << UDKLuokka << endl;

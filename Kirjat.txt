@@ -1,5 +1,3 @@
-Eino_Leino,Runokirja,0,45.1.32,WSOY,1850,false
-Hamalainen,Vuodet_hukassa,1,65.2.33,Tammi,1900,false
-Vilhunen,Hamara,2,55.5.55,WSOY,1950,false
-Kamarainen,Koodaajat,3,66.6.66,Tammi,1999,false
-
+Hamalainen,Vuodet_hukassa,101,65.2.33,Tammi,1900,false
+Vilhunen,Hamara,102,55.5.55,WSOY,1950,false
+Kamarainen,Koodaajat,103,66.6.66,Tammi,1999,false

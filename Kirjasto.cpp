@@ -9,18 +9,18 @@ int _tmain(int argc, _TCHAR* argv[])
 	setlocale(LC_ALL, ""); //Locale h kirjaston mukaan pakotetaan ohjelma käyttämään koneen omaa enkoodausta/lokalisoitua näppäimistöä,
 	// tarvittiin että saadaan ä ja ö toimimaan.
 
-	Kirjastoluokka* kirjastoLuokka = new Kirjastoluokka();
-	Apuluokka* apuluokka = new Apuluokka();
+	Kirjastoluokka* instantioituKirjastoOlio = new Kirjastoluokka();
+	Apuluokka* apuluokkaOlio = new Apuluokka();
 	
-	kirjastoLuokka->lueKirjatTiedostosta();
-	kirjastoLuokka->lueAsiakkaatTiedostosta();
+	instantioituKirjastoOlio->lueKirjatTiedostosta();
+	instantioituKirjastoOlio->lueAsiakkaatTiedostosta();
 
-	apuluokka->KaynnistaKirjastoApplikaatio(kirjastoLuokka);
+	apuluokkaOlio->KaynnistaKirjastoApplikaatio(instantioituKirjastoOlio);
 
-	apuluokka->LisaaGetCharreja(1);
+	apuluokkaOlio->LisaaGetCharreja(1);
 
-	delete kirjastoLuokka;	// Kutsu kirjastoluokan destruktoria
-	delete apuluokka;		// Kutsu apuluokan destruktoria
+	delete instantioituKirjastoOlio;	// Kutsu kirjastoluokan destruktoria
+	delete apuluokkaOlio;		// Kutsu apuluokan destruktoria
 
 	return 0;
 }

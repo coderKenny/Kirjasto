@@ -6,7 +6,8 @@ Asiakas::Asiakas()
 	LainatutKirjat = new map<int, Kirja*>();
 }
 
-Asiakas::Asiakas(bool valitsin)
+
+/*Asiakas::Asiakas(bool valitsin)
 {
 	Nimi="Kenneth Ekbom";
 	string Osoite="Ketolankatu 5 as 18";
@@ -15,8 +16,7 @@ Asiakas::Asiakas(bool valitsin)
 
 	LainatutKirjat = new map<int, Kirja*>();
 }
-
-
+*/
 void Asiakas::toString()
 {
 	cout << endl;
@@ -24,12 +24,13 @@ void Asiakas::toString()
 	cout << Osoite << endl;
 	cout << Sotu << endl;
 	cout << Asiakasnumero << endl;
+
+	// Set display fixed precision
+	std::cout << std::fixed;
+	std::cout << std::setprecision(2);
+
+	cout << "Mahdollisen sakon suuruus : "<< Sakko << endl;
 }
-
-
-
-
-
 
 void Asiakas::LainaaKirja(Kirja* kirjaolio)
 {

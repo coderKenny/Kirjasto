@@ -8,16 +8,14 @@
 Apuluokka::Apuluokka(void) // Apuluokan konstruktori
 {
 	kirja1= new Kirja();
-	asiakas1 = new Asiakas(true); // Overload to construct test
+	//asiakas1 = new Asiakas(true); // Overload to construct test
 }
-
 
 Apuluokka::~Apuluokka(void) // Apuluokan destruktori
 {
 	if(kirja1)
 		delete kirja1;
 }
-
 
 void Apuluokka::tauko() // System pause funktio //nimeä ja suomeksi
 {
@@ -48,27 +46,24 @@ void Apuluokka::ApuluokanLisaaKirjaFunktio(Kirjastoluokka* instantioituOlio) // 
 	// 
 	// dummy :
 
-	kirja1->TeoksenNimi="Bible";
-	kirja1->Lainaustilanne=false;
-	kirja1->Vuosi=1888;
-	kirja1->Tekija=("God");
-	kirja1->Sarjanumero=6;
-	kirja1->UDKLuokka="UDKluokka";
-	kirja1->Kustantaja="World";
+	//kirja1->TeoksenNimi="Bible";
+	//kirja1->Lainaustilanne=false;
+	//kirja1->Vuosi=1888;
+	//kirja1->Tekija=("God");
+	//kirja1->Sarjanumero=6;
+	//kirja1->UDKLuokka="UDKluokka";
+	//kirja1->Kustantaja="World";
 	
-	instantioituOlio->lisaaKirja(kirja1);
+	instantioituOlio->lisaaKirja();
 
 	LuoAlkuIF();
 }
-
 
 void Apuluokka::ListaaKaikkiKirjat(Kirjastoluokka*  instantioituLuokka)
 {
 	instantioituLuokka->naytaKaikkiKirjastonKirjat();
 	tauko();
 }
-
-
 
 void Apuluokka::KaynnistaKirjastoApplikaatio(Kirjastoluokka* instantioituOlio) // Käynnistä karuselli
 {
@@ -100,8 +95,7 @@ void Apuluokka::KaynnistaKirjastoApplikaatio(Kirjastoluokka* instantioituOlio) /
 				break;
 
 				case 53 :
-					//instantioituOlio->lainaaKirja(asiakas1,kirja1);
-					instantioituOlio->lainaaKirja(kirja1);
+					instantioituOlio->lainaaKirja();
 				break;
 
 				case 54 :
@@ -115,23 +109,31 @@ void Apuluokka::KaynnistaKirjastoApplikaatio(Kirjastoluokka* instantioituOlio) /
 				case 56:
 					instantioituOlio->poistaAsiakas();
 				break;
-
+				
 				case 57:
 				instantioituOlio->ListaaKaikkiAsiakkaat();
 				tauko();
 				break;
 
-				//case 97: // a Listaa asiakkaan lainat
-				// XXX a case
-				// break;
+				case 97: // a Listaa asiakkaan lainat
+					instantioituOlio->AsiakkaanLainatutKirjat();
+				break;
 
-			/*	case 98: 
-					instantioituOlio->
-				break;*/
+				case 98: //b Listaa asiakkaan tiedot
+					instantioituOlio->ListaaAsiakkaanTiedot();
+				break;
+
+				case 99: //c Lisää sakko
+					instantioituOlio->LisaaAsiaalleSakkoa();
+				break;
+
+				case 100: //d Maksa sakkoa pois
+					instantioituOlio->MaksaSakkoaPois();
+				break;
 
 				default:
 				LuoAlkuIF();
-				gotoxy(16,17);
+				gotoxy(16,19);
 				break;
 
 			}
@@ -145,9 +147,9 @@ void Apuluokka::LuoAlkuIF() // Luo puhdas screna
 {
 	
 	system("CLS");	// Tyhjennä ruutu, non-portable
-	gotoxy(0,17);		// Tyhjennä mahdollinen vanha syöte
+	gotoxy(0,18);		// Tyhjennä mahdollinen vanha syöte
 	cout<<"                                                                            "; // Tyhjennä rivi
-	gotoxy(16,17);		// Palauta kursori syöttömoodiin
+	gotoxy(16,19);		// Palauta kursori syöttömoodiin
 	
 	gotoxy(0,0);
 	cout<<endl;
@@ -157,18 +159,21 @@ void Apuluokka::LuoAlkuIF() // Luo puhdas screna
 	cout <<"2. Poista kirja kirjastosta\n";
 	cout <<"3. Listaa kaikki kirjaston kirjat\n";
 	cout <<"4. Hae haluttu kirja\n";
-	cout <<"5. Kirjan lainaaminen asiakkaalle\n";
-	cout <<"6. Palauta kirja kirjastoon\n";
+	cout <<"5. Lainaa kirja\n";
+	cout <<"6. Palauta kirja\n";
 	cout <<"7. Lisaa asiakas\n";
 	cout <<"8. Poista asiakas\n";
 	cout <<"9. Listaa kaikki asiakkaat\n";
 	cout <<"a. Listaa asiakkaan lainat\n";
 	cout <<"b. Listaa asiakkaan tiedot\n";
+	cout <<"c. Syötä asiaalle sakko\n";
+	cout <<"d. Lyhennä asiakkaan sakkoa\n";
+
 	cout <<"0. Poistu\n";
 	cout<<endl<<endl;
 
-	cout<<"Syota tehtava : ";
+	cout<<"Syötä tehtävä : ";
 
-	gotoxy(16,17);
+	gotoxy(16,19);
 
 }

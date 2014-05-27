@@ -24,6 +24,9 @@
 
 #include <locale.h>
 
+#include <iomanip>      // std::setprecision
+#include <sstream>      // std::stringstream
+
 using namespace std;
 
 #include "Kirjastoluokka.h"

@@ -9,17 +9,19 @@ public:
 	string Osoite;
 	string Sotu;
 	int Asiakasnumero;
+	double Sakko;
+
 	(map<int, Kirja*>)* LainatutKirjat; //Asiakkaan lainatut kirjat
-	
-	void Kysy();
 
 	void LainaaKirja(Kirja* kirjaolio); 
 	void PalautaKirja(Kirja* kirjaolio);
 	
 	Asiakas();
-	Asiakas(bool);
+	//Asiakas(bool);
 	~Asiakas();
 
 	void toString();
+
+	
 };
 

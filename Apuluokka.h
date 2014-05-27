@@ -13,6 +13,7 @@ public:
 	void LuoAlkuIF();
 	void ApuluokanLisaaKirjaFunktio(Kirjastoluokka*);
 	void ListaaKaikkiKirjat(Kirjastoluokka*);
+	
 
 	Kirja* kirja1; //Kova koodattu kirja ennenkuin tiedosto saatiin toimimaan
 	Asiakas* asiakas1; //Kovakoodattuasiakas
