@@ -14,7 +14,8 @@ public:
 
 	void lisaaAsiakas();
 	void poistaAsiakas();
-
+	void mywait(int waittime);
+	
 	void naytaKaikkiKirjastonKirjat(); //Listaa mapistä kaikki kirjat
 	
 	void HaeTiettyTeos(Kirja*); //hakee sarjanumerolla yhden kirjan

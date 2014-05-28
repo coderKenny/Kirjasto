@@ -1,6 +1,15 @@
 #include "stdafx.h"
 #include "Kirjastoluokka.h"
 
+mutex MyMutex;
+
+void Kirjastoluokka ::mywait(int waittime)
+{
+	clock_t endtime = clock() + waittime * CLOCKS_PER_SEC;
+	while (clock() < endtime)
+	{
+	}
+}
 Kirjastoluokka::Kirjastoluokka()
 {
 	KirjastonKirjat = new map<int, Kirja*>();
@@ -25,6 +34,10 @@ Kirjastoluokka::~Kirjastoluokka()
 
 void Kirjastoluokka::lueKirjatTiedostosta()
 {
+	MyMutex.lock();
+	cout << "Kirjojen luku alkoi nyt \n" << endl;
+	mywait(5);
+
 	//int counter=0;
 
 	ifstream myReadFile;
@@ -133,13 +146,17 @@ void Kirjastoluokka::lueKirjatTiedostosta()
 				KirjastonKirjat->insert(pair<int, Kirja*>(muodostettuKirjaOlio->Sarjanumero, muodostettuKirjaOlio));
 
 		}
-
 	
-		
 	}
+	cout << "Kirjojen luku loppui nyt \n" << endl;
+	MyMutex.unlock();
 }
 void Kirjastoluokka::lueAsiakkaatTiedostosta()
 {
+	MyMutex.lock();
+	cout << "Asiakkaiden luku alkoi nyt \n" << endl;
+	mywait(8);
+
 	int counter = 0;
 	ifstream myReadFile;
 	myReadFile.open("Asiakas.txt");
@@ -240,6 +257,9 @@ void Kirjastoluokka::lueAsiakkaatTiedostosta()
 
 	}
 	myReadFile.close();
+	cout << "Asiakkaiden luku loppui nyt\n" << endl;
+	tauko();
+	MyMutex.unlock();
 }
 void Kirjastoluokka::lisaaKirja() 
 {
@@ -781,16 +801,37 @@ void Kirjastoluokka::PaivitaSakkoRekisteri(Asiakas* asiakas,double palautus)
 		if(asiakas->Sakko!=0) // Saldoa jäljellä
 		{
 			tiedostonSisalto.append(",");
-			tiedostonSisalto.append(to_string(asiakas->Sakko));
+
+
+			tiedostonSisalto.append(to_string((int)asiakas->Sakko));
+
+
 
 			rivinLoppu = tiedostonSisalto.find_last_of('0');
-			tiedostonSisalto.erase(rivinLoppu-2,rivinLoppu);  // "Luotetaan" että double lyö liikanollia aina saman verran !
+			
+			string joku;
+
+			joku.append(to_string(asiakas->Sakko));
+
+			size_t paikka = joku.find_last_of('.');
+			
+			string apu=joku.substr(paikka+1,paikka);
+
+			tiedostonSisalto.append(",");
+
+			tiedostonSisalto.append(apu);
+			//tiedostonSisalto.erase(rivinLoppu-3,rivinLoppu);  // "Luotetaan" että double lyö liikanollia aina saman verran !
 
 		}
 
 		else // Saldo 0
 		{
+			// Aseta se -->
 			tiedostonSisalto.append(",");
+			tiedostonSisalto.append("0");
+			tiedostonSisalto.append("0");
+			tiedostonSisalto.append(",");
+			tiedostonSisalto.append("0");
 			tiedostonSisalto.append("0");
 		}
 

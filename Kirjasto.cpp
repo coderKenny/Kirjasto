@@ -4,6 +4,9 @@
 #include "stdafx.h"
 #include "Apuluokka.h"
 
+
+//mutex MyMutex;
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL, ""); //Locale h kirjaston mukaan pakotetaan ohjelma käyttämään koneen omaa enkoodausta/lokalisoitua näppäimistöä,
@@ -12,8 +15,16 @@ int _tmain(int argc, _TCHAR* argv[])
 	Kirjastoluokka* instantioituKirjastoOlio = new Kirjastoluokka();
 	Apuluokka* apuluokkaOlio = new Apuluokka();
 	
-	instantioituKirjastoOlio->lueKirjatTiedostosta();
-	instantioituKirjastoOlio->lueAsiakkaatTiedostosta();
+	//instantioituKirjastoOlio->lueKirjatTiedostosta(); 
+	//instantioituKirjastoOlio->lueAsiakkaatTiedostosta();
+
+	cout << "Kirjasto-ohjelma käynnistyy \n" << endl;
+	cout << "Luetaan kirjat ja asiakkaat tiedostoista \n" << endl;
+
+	thread mytreadKirjat(&Kirjastoluokka::lueKirjatTiedostosta,instantioituKirjastoOlio);
+	thread mytreadAsiakkaat(&Kirjastoluokka::lueAsiakkaatTiedostosta,instantioituKirjastoOlio);
+
+	mytreadKirjat.join(); mytreadAsiakkaat.join();
 
 	apuluokkaOlio->KaynnistaKirjastoApplikaatio(instantioituKirjastoOlio);
 
